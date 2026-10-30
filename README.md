@@ -2,7 +2,7 @@
 
 Publica automáticamente las noticias de varios feeds RSS en el canal de Telegram **@ElPatriarcaFEED**, con el título en una línea y el enlace debajo (Telegram genera la vista previa). Funciona gratis con GitHub Actions y un bot propio de Telegram; sustituye a IFTTT.
 
-Se ejecuta cada 10 minutos (GitHub puede retrasarlo algunos minutos en horas punta).
+Se ejecuta cada 5 minutos gracias a una tarea de [cron-job.org](https://console.cron-job.org/jobs) que pulsa «Run workflow» mediante la API de GitHub (token de grano fino «cron-job rss-telegram», solo con permiso de Actions sobre este repositorio y sin caducidad). El programador propio de GitHub (`cron` en `rss.yml`) se mantiene como respaldo. El aviso de la API indica que la versión 2022-11-28 deja de funcionar el 10/03/2028: antes de esa fecha hay que añadir en cron-job.org la cabecera `X-GitHub-Api-Version` con la versión vigente.
 
 ## Añadir o quitar un sitio
 

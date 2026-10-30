@@ -1,0 +1,33 @@
+name: Envío puntual de noticias atrasadas
+
+on:
+  workflow_dispatch:
+    inputs:
+      desde:
+        description: "Fecha y hora de España (AAAA-MM-DDTHH:MM)"
+        required: true
+      saltar:
+        description: "Trozos de enlaces ya publicados, separados por espacios"
+        required: false
+        default: ""
+
+concurrency:
+  group: rss
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install feedparser requests
+      - run: python backfill.py
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DESDE: ${{ inputs.desde }}
+          SALTAR: ${{ inputs.saltar }}

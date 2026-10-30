@@ -2,7 +2,7 @@ name: RSS a Telegram
 
 on:
   schedule:
-    - cron: "*/10 * * * *"   # cada 10 minutos
+    - cron: "3,13,23,33,43,53 * * * *"   # cada 10 minutos (evita el minuto exacto, más saturado)
   workflow_dispatch:          # botón para ejecutarlo a mano
 
 permissions:

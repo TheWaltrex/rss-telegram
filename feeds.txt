@@ -1,0 +1,3 @@
+https://elchapuzasinformatico.com/feed/
+https://blog.elhacker.net/feeds/posts/default
+# Añade aquí más sitios. En webs WordPress suele bastar con añadir /feed/ a la dirección

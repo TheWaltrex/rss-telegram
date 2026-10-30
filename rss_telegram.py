@@ -1,5 +1,6 @@
 import os, json, time, html, re
 import feedparser, requests
+from urllib.parse import urlparse
 
 TOKEN = os.environ["TELEGRAM_TOKEN"]
 CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
@@ -28,10 +29,13 @@ def entry_id(e):
     return e.get("id") or e.get("link") or e.get("title", "")
 
 def send(title, link):
+    # Enlace corto visible (solo el dominio) que apunta a la noticia completa
+    domain = urlparse(link).netloc.removeprefix("www.") or link
     payload = {
         "chat_id": CHAT_ID,
-        "text": f"{html.escape(title)}\n{link}",   # misma estructura que IFTTT
+        "text": f'{html.escape(title)}\n<a href="{html.escape(link, quote=True)}">{html.escape(domain)}</a>',
         "parse_mode": "HTML",
+        "link_preview_options": {"url": link},   # vista previa de la noticia
     }
     for _ in range(5):
         r = requests.post(f"{API}/sendMessage", json=payload, timeout=30)
